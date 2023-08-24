@@ -57,15 +57,26 @@ enum AzureCognitiveSearchQueryType {
 @added(ServiceApiVersions.v2023_08_01_Preview)
 @doc("""
 A specific representation of configurable options for Azure Cognitive Search when using it as an Azure OpenAI chat
-extension.
+extension. Note that Azure chat extensions are only supported in Azure OpenAI.
 """)
-model AzureCognitiveSearchChatExtensionConfiguration {
+model AzureCognitiveSearchChatExtensionConfiguration extends AzureChatExtensionConfiguration {
   @doc("""
-  The type label to use when configuring Azure OpenAI chat extensions. This should typically not be changed from its
-  default value for Azure Cognitive Search.
+  The configuration of an Azure OpenAI chat extension.
   """)
   type: AzureChatExtensionType.azureCognitiveSearch;
 
+  @doc("""
+  The configuration payload used for the Azure chat extension. The structure payload details are specific to the
+  extension being configured.
+  """)
+  parameters: AzureCognitiveSearchChatExtensionConfigurationParameters;
+}
+
+@added(ServiceApiVersions.v2023_08_01_Preview)
+@doc("""
+The configuration parameters of an Azure OpenAI chat extension.
+""")
+model AzureCognitiveSearchChatExtensionConfigurationParameters {
   @doc("The absolute endpoint path for the Azure Cognitive Search resource to use.")
   @projectedName("csharp", "SearchEndpoint")
   endpoint: url;
